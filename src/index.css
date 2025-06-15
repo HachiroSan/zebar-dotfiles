@@ -1,0 +1,269 @@
+/**
+ * Import the Nerdfonts icon font.
+ * Ref https://www.nerdfonts.com/cheat-sheet for a cheatsheet of available Nerdfonts icons.
+ */
+@import 'https://www.nerdfonts.com/assets/css/webfont.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: #ffffff;
+  background: transparent;
+  overflow: hidden;
+}
+
+div,
+span,
+p {
+  cursor: default;
+  user-select: none;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#root {
+  background: transparent;
+  border: none;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 100%;
+  padding: 8px 16px;
+  gap: 32px;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  justify-self: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: #cdd6f4;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 12px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.right {
+  justify-self: end;
+  gap: 6px;
+}
+
+.left {
+  gap: 16px;
+}
+
+/* ORIGINAL WORKSPACE STYLING - RECTANGULAR */
+.workspaces {
+  display: flex;
+  align-items: center;
+}
+
+.workspace {
+  background: rgb(255 255 255 / 5%);
+  margin-right: 4px;
+  padding: 4px 8px;
+  color: rgb(255 255 255 / 90%);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+
+  &.displayed {
+    background: rgb(255 255 255 / 15%);
+  }
+
+  &.focused,
+  &:hover {
+    background: rgb(75 115 255 / 50%);
+  }
+}
+
+/* MODERN CHIP STYLING FOR RIGHT SIDE */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  color: #cdd6f4;
+  font-size: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.chip .icon {
+  font-size: 11px;
+  font-weight: 500;
+  min-width: 10px;
+  text-align: center;
+  color: #89b4fa;
+}
+
+.chip .text {
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #cdd6f4;
+}
+
+.chip .separator {
+  color: #6c7086;
+  margin: 0 2px;
+  font-size: 10px;
+}
+
+.chip .icon.charging {
+  color: #f9e2af;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.binding-mode,
+.tiling-direction {
+  background: rgba(0, 0, 0, 0.4);
+  color: #cdd6f4;
+  border: none;
+  border-radius: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.binding-mode:hover,
+.tiling-direction:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.high-usage {
+  color: #f38ba8;
+  font-weight: 600;
+}
+
+/* Compact system stats chip */
+.system-stats {
+  gap: 3px;
+}
+
+.system-stats .separator {
+  margin: 0 4px;
+}
+
+/* Network chip - icon only for compactness */
+.network-chip {
+  padding: 4px 6px;
+}
+
+/* Weather chip - minimal */
+.weather-chip {
+  gap: 3px;
+}
+
+/* Audio chip styling */
+.audio-chip {
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Icon colors for different chip types */
+.system-stats .icon {
+  color: #fab387; /* Orange for CPU/Memory */
+}
+
+.system-stats .icon:last-of-type {
+  color: #a6e3a1; /* Green for battery */
+}
+
+.network-chip .icon {
+  color: #a6e3a1; /* Green for network */
+}
+
+.weather-chip .icon {
+  color: #74c7ec; /* Blue for weather */
+}
+
+.audio-chip .icon {
+  color: #cba6f7; /* Purple for audio */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .app {
+    padding: 8px 12px;
+    gap: 24px;
+  }
+  
+  .right {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 800px) {
+  .chip .text {
+    display: none;
+  }
+  
+  .system-stats .separator {
+    display: none;
+  }
+  
+  .right {
+    gap: 3px;
+  }
+  
+  .left {
+    gap: 12px;
+  }
+}

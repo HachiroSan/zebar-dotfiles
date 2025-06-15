@@ -1,0 +1,192 @@
+/* @refresh reload */
+import './index.css';
+import { render } from 'solid-js/web';
+import { createStore } from 'solid-js/store';
+import * as zebar from 'zebar';
+// Modern minimalist icons from solid-icons
+import { 
+  HiSolidWifi, 
+  HiSolidCpuChip,
+  HiSolidCircleStack,
+  HiSolidSpeakerWave,
+  HiSolidSun,
+  HiSolidMoon,
+  HiSolidCloud,
+  HiSolidBolt,
+  HiSolidArrowsRightLeft,
+  HiSolidArrowsUpDown,
+  HiSolidBattery100,
+  HiSolidBattery50,
+  HiSolidBattery0,
+  HiSolidSignal,
+  HiSolidExclamationTriangle
+} from 'solid-icons/hi';
+
+const providers = zebar.createProviderGroup({
+  glazewm: { type: 'glazewm' },
+  network: { type: 'network' },
+  cpu: { type: 'cpu' },
+  battery: { type: 'battery' },
+  memory: { type: 'memory' },
+  weather: { type: 'weather' },
+  date: { type: 'date', formatting: 'EEE d MMM t' },
+  audio: { type: 'audio' },
+});
+
+render(() => <App />, document.getElementById('root')!);
+
+function App() {
+  const [output, setOutput] = createStore(providers.outputMap);
+
+  providers.onOutput(outputMap => setOutput(outputMap));
+
+  // Get modern icon for network status
+  const getNetworkIcon = (networkOutput: any) => {
+    switch (networkOutput.defaultInterface?.type) {
+      case 'ethernet':
+        return <HiSolidSignal size={12} />;
+      case 'wifi':
+        return <HiSolidWifi size={12} />;
+      default:
+        return <HiSolidExclamationTriangle size={12} />;
+    }
+  };
+
+  // Get modern icon for battery level
+  const getBatteryIcon = (batteryOutput: any) => {
+    if (batteryOutput.chargePercent > 60) {
+      return <HiSolidBattery100 size={12} />;
+    } else if (batteryOutput.chargePercent > 20) {
+      return <HiSolidBattery50 size={12} />;
+    }
+    return <HiSolidBattery0 size={12} />;
+  };
+
+  // Get modern icon for weather status
+  const getWeatherIcon = (weatherOutput: any) => {
+    switch (weatherOutput.status) {
+      case 'clear_day':
+        return <HiSolidSun size={12} />;
+      case 'clear_night':
+        return <HiSolidMoon size={12} />;
+      case 'cloudy_day':
+      case 'cloudy_night':
+        return <HiSolidCloud size={12} />;
+      case 'light_rain_day':
+      case 'light_rain_night':
+      case 'heavy_rain_day':
+      case 'heavy_rain_night':
+        return <HiSolidCloud size={12} />;
+      case 'snow_day':
+      case 'snow_night':
+        return <HiSolidCloud size={12} />;
+      case 'thunder_day':
+      case 'thunder_night':
+        return <HiSolidBolt size={12} />;
+      default:
+        return <HiSolidCloud size={12} />;
+    }
+  };
+
+  return (
+    <div class="app">
+      <div class="left">
+        {output.glazewm && (
+          <div class="workspaces">
+            {output.glazewm.currentWorkspaces?.map((workspace: any) => (
+              <button
+                class={`workspace ${workspace.hasFocus ? 'focused' : ''} ${workspace.isDisplayed ? 'displayed' : ''}`}
+                onClick={() =>
+                  output.glazewm.runCommand(
+                    `focus --workspace ${workspace.name}`,
+                  )
+                }
+              >
+                {workspace.displayName ?? workspace.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div class="center">
+        {output.date?.formatted}
+      </div>
+
+      <div class="right">
+        {output.glazewm && (
+          <>
+            {output.glazewm.bindingModes?.map((bindingMode: any) => (
+              <button
+                class="binding-mode"
+                onClick={() =>
+                  output.glazewm.runCommand(
+                    `wm-disable-binding-mode --name ${bindingMode.name}`,
+                  )
+                }
+              >
+                {bindingMode.displayName ?? bindingMode.name}
+              </button>
+            ))}
+
+            <button
+              class={`tiling-direction ${output.glazewm.tilingDirection === 'horizontal' ? 'horizontal' : 'vertical'}`}
+              onClick={() =>
+                output.glazewm.runCommand('toggle-tiling-direction')
+              }
+            >
+              {output.glazewm.tilingDirection === 'horizontal' ? <HiSolidArrowsRightLeft size={12} /> : <HiSolidArrowsUpDown size={12} />}
+            </button>
+          </>
+        )}
+
+        {/* Compact system stats chip */}
+        <div class="chip system-stats">
+          {output.cpu && (
+            <>
+              <span class="icon"><HiSolidCpuChip size={12} /></span>
+              <span class={`text ${output.cpu.usage > 85 ? 'high-usage' : ''}`}>
+                {Math.round(output.cpu.usage)}%
+              </span>
+            </>
+          )}
+          {output.memory && (
+            <>
+              <span class="separator">|</span>
+              <span class="icon"><HiSolidCircleStack size={12} /></span>
+              <span class="text">{Math.round(output.memory.usage)}%</span>
+            </>
+          )}
+          {output.battery && (
+            <>
+              <span class="separator">|</span>
+              {output.battery.isCharging && <span class="icon charging"><HiSolidBolt size={10} /></span>}
+              <span class="icon">{getBatteryIcon(output.battery)}</span>
+              <span class="text">{Math.round(output.battery.chargePercent)}%</span>
+            </>
+          )}
+        </div>
+
+        {output.network && (
+          <div class="chip network-chip">
+            <span class="icon">{getNetworkIcon(output.network)}</span>
+          </div>
+        )}
+
+        {output.weather && (
+          <div class="chip weather-chip">
+            <span class="icon">{getWeatherIcon(output.weather)}</span>
+            <span class="text">{Math.round(output.weather.celsiusTemp)}°</span>
+          </div>
+        )}
+
+        {output.audio?.defaultPlaybackDevice && (
+          <div class="chip audio-chip">
+            <span class="icon"><HiSolidSpeakerWave size={12} /></span>
+            <span class="text">{Math.round(output.audio.defaultPlaybackDevice.volume)}%</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
