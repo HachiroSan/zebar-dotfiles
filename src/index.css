@@ -74,29 +74,48 @@ body,
   gap: 16px;
 }
 
-/* ORIGINAL WORKSPACE STYLING - RECTANGULAR */
+/* MINIMALIST CIRCULAR WORKSPACE STYLING */
 .workspaces {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 
 .workspace {
-  background: rgb(255 255 255 / 5%);
-  margin-right: 4px;
-  padding: 4px 8px;
-  color: rgb(255 255 255 / 90%);
-  border: none;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 9px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
 
-  &.displayed {
-    background: rgb(255 255 255 / 15%);
-  }
+.workspace.displayed {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+}
 
-  &.focused,
-  &:hover {
-    background: rgb(75 115 255 / 50%);
-  }
+.workspace.focused {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.15);
+  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.15);
+}
+
+.workspace:hover:not(.focused) {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.08);
 }
 
 /* MODERN CHIP STYLING FOR RIGHT SIDE */
