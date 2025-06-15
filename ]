@@ -23,7 +23,6 @@ import {
 import { BsEthernet } from 'solid-icons/bs'
 import { FiWifi } from 'solid-icons/fi'
 import { FaSolidMemory } from 'solid-icons/fa'
-import { FiCpu } from 'solid-icons/fi'
 const providers = zebar.createProviderGroup({
   glazewm: { type: 'glazewm' },
   network: { type: 'network' },
@@ -146,7 +145,7 @@ function App() {
         <div class="chip system-stats">
           {output.cpu && (
             <>
-              <span class="icon"><FiCpu size={12} /></span>
+              <span class="icon"><HiSolidCpuChip size={12} /></span>
               <span class={`text ${output.cpu.usage > 85 ? 'high-usage' : ''}`}>
                 {Math.round(output.cpu.usage)}%
               </span>
