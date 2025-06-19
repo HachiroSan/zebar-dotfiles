@@ -74,6 +74,22 @@ body,
   gap: 16px;
 }
 
+/* WORKSPACES CHIP CONTAINER */
+.workspaces-chip {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 4px 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.workspaces-chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
 /* MINIMALIST CIRCULAR WORKSPACE STYLING */
 .workspaces {
   display: flex;
@@ -82,8 +98,8 @@ body,
 }
 
 .workspace {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -95,26 +111,28 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .workspace.displayed {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
   color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .workspace.focused {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(137, 180, 250, 0.3);
+  border: 1px solid rgba(137, 180, 250, 0.8);
   color: rgba(255, 255, 255, 1);
   transform: scale(1.15);
-  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(137, 180, 250, 0.3);
 }
 
 .workspace:hover:not(.focused) {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.4);
   color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
   transform: scale(1.08);
 }
 
@@ -199,6 +217,93 @@ body,
   font-weight: 600;
 }
 
+/* NETWORK CHIP STYLING */
+.network-chip {
+  max-width: 280px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.network-chip .network-interface {
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.network-chip .network-status {
+  font-size: 9px;
+  font-weight: 600;
+  color: #89b4fa;
+}
+
+.network-chip .traffic-text {
+  color: #89b4fa;
+  font-size: 9px;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+.network-chip .traffic-down {
+  color: #a6e3a1;
+}
+
+.network-chip:hover .traffic-text {
+  color: #cdd6f4;
+}
+
+.network-chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* WEATHER CHIP STYLING */
+.weather-chip {
+  max-width: 200px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.weather-chip .weather-desc {
+  font-size: 9px;
+  font-weight: 600;
+  color: #cdd6f4;
+  text-transform: capitalize;
+}
+
+.weather-chip .weather-temp {
+  font-size: 10px;
+  font-weight: 700;
+  color: #f9e2af;
+}
+
+.weather-chip .weather-temp-compact {
+  font-size: 10px;
+  font-weight: 600;
+  color: #f9e2af;
+}
+
+.weather-chip .weather-wind {
+  font-size: 9px;
+  font-weight: 500;
+  color: #89b4fa;
+}
+
+.weather-chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.weather-chip .icon {
+  transition: all 0.2s ease;
+}
+
+.weather-chip:hover .icon {
+  transform: scale(1.1);
+}
+
 /* Compact system stats chip */
 .system-stats {
   gap: 3px;
@@ -218,71 +323,362 @@ body,
   gap: 3px;
 }
 
-/* Audio chip styling */
+/* VOLUME/AUDIO CHIP STYLING */
 .audio-chip {
-  gap: 4px;
-  background: rgba(0, 0, 0, 0.4);
+  max-width: 250px;
+  min-width: 80px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-button {
+.audio-chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.volume-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.volume-current {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.volume-device-name {
+  font-size: 9px;
+  font-weight: 600;
+  color: #cdd6f4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.volume-btn {
+  background: rgba(255, 255, 255, 0.1);
   border: none;
-  background: transparent;
-  color: inherit;
+  border-radius: 6px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  color: #cdd6f4;
+  font-size: 10px;
+  font-weight: 600;
 }
 
-button:hover {
-  opacity: 0.9;
+.volume-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
-/* Icon colors for different chip types */
-.system-stats .icon {
-  color: #fab387; /* Orange for CPU/Memory */
+.volume-level {
+  font-size: 10px;
+  font-weight: 600;
+  color: #89b4fa;
+  min-width: 30px;
+  text-align: center;
 }
 
-.system-stats .icon:last-of-type {
-  color: #a6e3a1; /* Green for battery */
+.volume-devices {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 3px;
+  margin-top: 2px;
 }
 
-.network-chip .icon {
-  color: #a6e3a1; /* Green for network */
+.volume-device-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px 0;
 }
 
-.weather-chip .icon {
-  color: #74c7ec; /* Blue for weather */
+.volume-device-alt-name {
+  font-size: 8px;
+  font-weight: 500;
+  color: #a6adc8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.volume-device-alt-level {
+  font-size: 8px;
+  font-weight: 500;
+  color: #6c7086;
+  margin-left: 4px;
 }
 
 .audio-chip .icon {
-  color: #cba6f7; /* Purple for audio */
+  color: #a6e3a1;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .app {
-    padding: 8px 12px;
-    gap: 24px;
-  }
-  
-  .right {
-    gap: 4px;
-  }
+.high-usage {
+  color: #f38ba8;
+  font-weight: 600;
 }
 
-@media (max-width: 800px) {
-  .chip .text {
-    display: none;
-  }
-  
-  .system-stats .separator {
-    display: none;
-  }
-  
-  .right {
-    gap: 3px;
-  }
-  
-  .left {
-    gap: 12px;
-  }
+/* MEDIA CHIP STYLING */
+.media-chip {
+  max-width: 300px;
+  min-width: 120px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.media-chip:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.media-detailed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.media-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.media-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #cdd6f4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.media-artist {
+  font-size: 8px;
+  font-weight: 500;
+  color: #89b4fa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.media-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.media-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #cdd6f4;
+}
+
+.media-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.media-btn-main {
+  background: rgba(137, 180, 250, 0.2);
+  border: 1px solid rgba(137, 180, 250, 0.3);
+}
+
+.media-btn-main:hover {
+  background: rgba(137, 180, 250, 0.3);
+  border-color: rgba(137, 180, 250, 0.5);
+}
+
+.media-compact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.media-compact-text {
+  font-size: 9px;
+  font-weight: 500;
+  color: #cdd6f4;
+}
+
+.media-status {
+  color: #a6e3a1;
+  display: flex;
+  align-items: center;
+}
+
+.media-chip .icon {
+  color: #f38ba8;
+}
+
+/* Animation for playing status */
+@keyframes pulse-media {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.media-status {
+  animation: pulse-media 2s infinite;
+}
+
+/* VOLUME DROPDOWN STYLING - Fix for overflow issue */
+.volume-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 200px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.volume-main-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.volume-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.volume-devices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.volume-devices-header {
+  font-size: 8px;
+  font-weight: 600;
+  color: #89b4fa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.volume-dropdown .volume-device-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.volume-dropdown .volume-device-item:hover {
+  background: rgba(137, 180, 250, 0.2);
+  transform: translateX(2px);
+}
+
+.volume-dropdown .device-name {
+  flex: 1;
+  font-size: 9px;
+  font-weight: 500;
+  color: #cdd6f4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volume-dropdown .device-volume {
+  font-size: 8px;
+  font-weight: 600;
+  color: #a6e3a1;
+  min-width: 30px;
+  text-align: right;
+}
+
+.volume-dropdown .icon {
+  color: #89b4fa;
+  min-width: 14px;
+}
+
+/* VOLUME INLINE CONTROLS STYLING */
+.audio-chip .device-name {
+  font-size: 9px;
+  font-weight: 500;
+  color: #cdd6f4;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.volume-controls-inline {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.volume-btn-inline {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #cdd6f4;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.volume-btn-inline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.volume-level-inline {
+  font-size: 9px;
+  font-weight: 600;
+  color: #89b4fa;
+  min-width: 25px;
+  text-align: center;
 }
