@@ -34,7 +34,7 @@ import { FaSolidMemory } from 'solid-icons/fa'
 import { FiCpu } from 'solid-icons/fi'
 const providers = zebar.createProviderGroup({
   glazewm: { type: 'glazewm' },
-  network: { type: 'network', refreshInterval: 500 }, // 0.5 second refresh for ultra-fast traffic monitoring
+  network: { type: 'network', refreshInterval: 1000 }, // 1 second refresh for real-time traffic monitoring
   cpu: { type: 'cpu' },
   battery: { type: 'battery' },
   memory: { type: 'memory' },  weather: { type: 'weather' },
@@ -69,21 +69,21 @@ function App() {
         return <HiSolidSignal size={12} />;
     }
   };
-
   // Format network traffic data
   const formatNetworkTraffic = (traffic: any) => {
     if (!traffic) return { down: '0 B/s', up: '0 B/s' };
     
-    const formatBytes = (bytes: number) => {
-      if (bytes < 1024) return `${bytes} B/s`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB/s`;
-      if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB/s`;
-      return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB/s`;
+    const formatBytesPerSec = (bytesPerSec: number) => {
+      if (bytesPerSec < 1024) return `${Math.round(bytesPerSec)} B/s`;
+      if (bytesPerSec < 1024 * 1024) return `${(bytesPerSec / 1024).toFixed(1)} KB/s`;
+      if (bytesPerSec < 1024 * 1024 * 1024) return `${(bytesPerSec / (1024 * 1024)).toFixed(1)} MB/s`;
+      return `${(bytesPerSec / (1024 * 1024 * 1024)).toFixed(1)} GB/s`;
     };
 
+    // traffic.received.bytes and traffic.transmitted.bytes are already bytes per second
     return {
-      down: formatBytes(traffic.received?.bytes || 0),
-      up: formatBytes(traffic.transmitted?.bytes || 0)
+      down: formatBytesPerSec(traffic.received?.bytes || 0),
+      up: formatBytesPerSec(traffic.transmitted?.bytes || 0)
     };
   };
 
