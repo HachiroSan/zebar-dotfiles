@@ -34,7 +34,7 @@ import { FaSolidMemory } from 'solid-icons/fa'
 import { FiCpu } from 'solid-icons/fi'
 const providers = zebar.createProviderGroup({
   glazewm: { type: 'glazewm' },
-  network: { type: 'network', refreshInterval: 1000 }, // 1 second refresh for real-time traffic monitoring
+  network: { type: 'network', refreshInterval: 5000 }, // 1 second refresh for real-time traffic monitoring
   cpu: { type: 'cpu' },
   battery: { type: 'battery' },
   memory: { type: 'memory' },  weather: { type: 'weather' },
@@ -290,17 +290,7 @@ function App() {
                 }
               >
                 {bindingMode.displayName ?? bindingMode.name}
-              </button>
-            ))}
-
-            <button
-              class={`tiling-direction ${output.glazewm.tilingDirection === 'horizontal' ? 'horizontal' : 'vertical'}`}
-              onClick={() =>
-                output.glazewm.runCommand('toggle-tiling-direction')
-              }
-            >
-              {output.glazewm.tilingDirection === 'horizontal' ? <HiSolidArrowsRightLeft size={12} /> : <HiSolidArrowsUpDown size={12} />}
-            </button>
+              </button>            ))}
           </>
         )}
 
